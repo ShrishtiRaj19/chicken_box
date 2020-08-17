@@ -6,36 +6,45 @@ var ACCESS_TOKEN_SECRET='cd720ce3844bb9b8a628e8473c324fefa1f83567f30104cb511645d
 
 const signup = async(req, res, next) =>{
    try {
+   	var email = (req.body.email).toLowerCase()
+   	req.body.email = email;
     const newUser = await userModel.create(req.body)
-    return res.status(200).json(newUser)
+    return res.status(200).json({Success:true, data:newUser});
   } catch (err) {
     console.log("err", err)
-    return res.status(400).json({status:"Failure", msg:"Error while registering"})  
+    return res.status(400).json({Success:false, msg:"Error while registering"})  
   }
  
 }
 
 const login = async(req, res, next) =>{
-	const logged_user = await userModel.findOne({email:req.body.email});
+	const lowerEmail = (req.body.email).toLowerCase()
+	const logged_user = await userModel.findOne({email:lowerEmail});
 	if (logged_user == null) 
-	  return res.json({status:"Failure", message:"Invalid email or password"})
+	  return res.json({Success:false, message:"Invalid email or password"})
 
 	const passwordexists = await userModel.findOne({password:req.body.password})   
 	  if(passwordexists==null) 
-		 return res.json({status:"Failure", message:"Invalid email or password"})
+		 return res.json({Success:false, message:"Invalid email or password"})
 		 
 	  //Authorize user
 	const user={email:req.body.email};
 	const accessToken=jwt.sign(user, ACCESS_TOKEN_SECRET) 
-	return res.json({status:"success", data:{access_token:accessToken}}) 
+	return res.json({Success:true, data:{access_token:accessToken}}) 
  
+}
+
+const getUsers = async (req, res)=>{
+	const list = await userModel.find({});
+	return res.status(200).json({Success:true, data:list});
+
 }
 
 const authenticateToken = (req, res, next) => {
 	const token = req.headers['access-token']
 	jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
 	  console.log(err)
-	  if (err) return res.send({success:"Failure", message:"unAuthorized User, please LoginIn"})
+	  if (err) return res.send({Success:false, message:"unAuthorized User, please LoginIn"})
 	  req.user = user
 	  next()
 	})
@@ -43,5 +52,6 @@ const authenticateToken = (req, res, next) => {
 module.exports = {
 	signup, 
 	login,
-	authenticateToken
+	authenticateToken,
+	getUsers
 }
