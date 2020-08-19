@@ -15,8 +15,10 @@ const getProduct = async(req, res, next) =>{
 const createProduct = async (req, res, next) => {
   try {
     const productObj= await product.create(req.body)
+    console.log("reqjjj", req.body)
     return res.status(200).json({Success:true, data:productObj})
   } catch (err) {
+    console.log(err)
     return res.status(400).json({Success:false, message:"Error while adding Product"})  
   }
 }

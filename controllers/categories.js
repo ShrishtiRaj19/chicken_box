@@ -62,7 +62,7 @@ const updateCategory = async (req, res, next) => {
       const updatedData = await categoriesModel.findOneAndUpdate({_id:req.params.id}, req.body, {
         new: true,
       })
-      return res.status(200).json(updatedData)
+      return res.status(200).json({Success:true, data:updatedData})
     }
   } catch (err) {
     return res.status(400).json({Success:false, message:"Error while updating Category"});
