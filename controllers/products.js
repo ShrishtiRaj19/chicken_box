@@ -4,7 +4,7 @@ const product = require("../models/products.js")
 
 const getProduct = async(req, res, next) =>{
 	try{
-		const list = await product.find({});
+		const list = await product.find({catId:req.params.catid});
 		return res.status(200).json({Success:true, data:list})
 	}catch(err){
     return res.status(400).json({Success:false, message:"Error while getting details of Product"})
