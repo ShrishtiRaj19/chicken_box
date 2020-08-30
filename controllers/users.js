@@ -30,7 +30,7 @@ const login = async(req, res, next) =>{
 	  //Authorize user
 	const user={email:req.body.email};
 	const accessToken=jwt.sign(user, ACCESS_TOKEN_SECRET) 
-	return res.json({Success:true, data:{access_token:accessToken}}) 
+	return res.json({Success:true, data:{access_token:accessToken, userDetails:logged_user}}) 
  
 }
 
