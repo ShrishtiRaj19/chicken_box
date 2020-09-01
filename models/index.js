@@ -12,4 +12,5 @@ mongoose.Promise = Promise;
 
 module.exports.products = require("./products")
 module.exports.categories = require("./categories")
-// module.exports.cart = require("./cart")
+module.exports.cart = require("./cart");
+module.exports.banners = require("./banner")

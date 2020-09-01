@@ -6,6 +6,7 @@ const db = require("./models/index.js")
 var productRoutes = require('./routes/products');
 var categoryRoutes = require('./routes/categories');
 var cartRoutes = require('./routes/cart');
+var bannerRoutes = require('./routes/banner');
 var usersRoutes = require('./routes/users')
 const router = express.Router();
 var cors = require("cors")
@@ -16,6 +17,7 @@ productRoutes(router);
 categoryRoutes(router);
 cartRoutes(router);
 usersRoutes(router);
+bannerRoutes(router);
 app.use(cors({origin: '*'}))
 
 const appPort = process.env.PORT ? process.env.PORT :4000 
