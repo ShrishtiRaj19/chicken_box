@@ -79,13 +79,14 @@ const createCart = async (req, res, next) => {
 const deleteCart = async(req, res, next)=>{
   try{
   	if(req.query.deleteType === "all"){
-    	await cart.findByIdAndRemove({userId:req.params.userId})
+    	await cart.find({userId:req.query.userId}).remove();
     	return res.status(200).json({Success:true, msg:"Cart is Successfully Deleted"})
   	}else{
   		await cart.updated({'prdct.prdctId':req.query.productId}, {$pull:{'prdct.prdctId':req.query.productId}});
   		return res.status(200).json({Success:true, msg:"Product is Successfully Deleted from Cart"})
   	}
   }catch(err){
+  	console.log("error", err)
     return res.status(400).json({Success:false, msg:"Error while deleting cart"});
   }
 }
