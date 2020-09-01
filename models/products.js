@@ -21,7 +21,8 @@ const productSchema = new mongoose.Schema({
   disc: { //description about product
     type: String, required: true,
   },
-  status:{type:Number, required:false}
+  status:{type:Number, required:false},
+  outOfStock:{type:Boolean, required:false, default:false}
   
 })
 
