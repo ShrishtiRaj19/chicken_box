@@ -8,26 +8,30 @@ const _ = require("underscore")
 const getCart = async(req, res, next) =>{
 	try{
 		cart.findOne({userId:req.params.userId}).then((cartDetail)=>{
-			console.log("cartdetails", cartDetail)
-			var prductIds = _.pluck(cartDetail.prdct, 'prdctId');
-			if(prductIds.length){
-				product.find({_id:{$in:prductIds}}).then((data)=>{
-					_.each(cartDetail.prdct, (newPrdct)=>{
-						if(newPrdct.prdctId == data._id){
-							data["quantity"] = newPrdct.quantity;
-						}
-					})
-					var obj = {}
-					obj["prdtDetails"] = data;
-					obj["_id"] = cartDetail._id;
-					obj["userId"] = cartDetail.userId;
-					obj["totalAmount"] = cartDetail.totalAmount;
-					obj["discountedAmount"] = cartDetail.discountedAmount
-					return res.status(200).json({Success:true, data:obj})
-				});
+			if(cartDetail){
+				var prductIds = _.pluck(cartDetail.prdct, 'prdctId');
+				if(prductIds.length){
+					product.find({_id:{$in:prductIds}}).then((data)=>{
+						_.each(cartDetail.prdct, (newPrdct)=>{
+							if(newPrdct.prdctId == data._id){
+								data["quantity"] = newPrdct.quantity;
+							}
+						})
+						var obj = {}
+						obj["prdtDetails"] = data;
+						obj["_id"] = cartDetail._id;
+						obj["userId"] = cartDetail.userId;
+						obj["totalAmount"] = cartDetail.totalAmount;
+						obj["discountedAmount"] = cartDetail.discountedAmount
+						return res.status(200).json({Success:true, data:obj})
+					});
+				}else{
+					return res.status(200).json({Success:true, message:"No data Found!!"})
+				}
 			}else{
 				return res.status(200).json({Success:true, message:"No data Found!!"})
 			}
+			
 
 		});
 	}catch(err){
