@@ -8,6 +8,7 @@ const _ = require("underscore")
 const getCart = async(req, res, next) =>{
 	try{
 		cart.findOne({userId:req.params.userId}).then((cartDetail)=>{
+			console.log("cartdetails", cartDetail)
 			var prductIds = _.pluck(cartDetail.prdct, 'prdctId');
 			if(prductIds.length){
 				product.find({_id:{$in:prductIds}}).then((data)=>{
