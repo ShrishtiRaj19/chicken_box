@@ -12,9 +12,20 @@ const signup = async(req, res, next) =>{
     return res.status(200).json({Success:true, data:newUser});
   } catch (err) {
     console.log("err", err)
-    return res.status(400).json({Success:false, msg:"Error while registering"})  
+    return res.status(400).json({Success:false, message:"Error while registering"})  
   }
  
+}
+
+const updateUser = async(req, res, next)=>{
+	try{
+		var email = (req.body.email).toLowerCase()
+		delete req.body.email;
+		await userModel.update({email:email}, req.body);
+		return res.status(400).json({Success:true, message:"User successfully updated"}) 
+	}catch(err){
+		return res.status(400).json({Success:false, message:"Error while updating user"}) 
+	}
 }
 
 const login = async(req, res, next) =>{
@@ -53,5 +64,6 @@ module.exports = {
 	signup, 
 	login,
 	authenticateToken,
-	getUsers
+	getUsers,
+	updateUser
 }
