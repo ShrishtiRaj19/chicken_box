@@ -5,4 +5,6 @@ module.exports = (router) => {
     router.put('/user/update', user.updateUser);
     router.post('/login', user.login);
     router.get('/users', user.getUsers);
+    router.get('/users/:email', user.getUsersByEmail);
+
 }

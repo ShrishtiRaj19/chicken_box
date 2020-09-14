@@ -2,13 +2,13 @@
 const {instance} = require('../keys/razorpay')
 
 const order = async(req, res, next) =>{
+
     try {
         const options = {
-          amount: 10 * 100, // amount == Rs 10
+          amount: (req.body.amount) * 100, // amount == Rs 10
           currency: "INR",
           receipt: "receipt#1",
-          payment_capture: 0,
-     // 1 for automatic capture // 0 for manual capture
+          payment_capture: 0
         };
       instance.orders.create(options, async function (err, order) {
         if (err) {
