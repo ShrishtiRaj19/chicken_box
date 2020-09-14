@@ -32,7 +32,11 @@ const getUsersByEmail = async(req, res, next)=>{
 	try{
 		var email = (req.params.email).toLowerCase();
 		const userDetails = await userModel.find({email:email});
-		return res.status(400).json({Success:true, data:userDetails}) 
+		if(userDetails){
+			return res.status(200).json({Success:true, data:userDetails}) 
+		}else{
+			return res.status(200).json({Success:true, message:"No Data Found!!"}) 
+		}
 	}catch(err){
 		console.log("err", err)
 		return res.status(400).json({Success:false, message:"Error while getting user"}) 
