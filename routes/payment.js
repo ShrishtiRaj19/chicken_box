@@ -1,6 +1,8 @@
 var payment = require('../controllers/payment');
 
 module.exports = (router) => {
-    router.get('/order', payment.order);
+    router.post('/order', payment.order);
+    router.post('/capture/:paymentId', payment.payementDetails);
+
   
 }
