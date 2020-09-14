@@ -2,7 +2,7 @@
 const razorpay = require('../keys/razorpay');
 const request = require('request');
 
-const Razorpay = require('Razorpay')
+const Razorpay = require('razorpay')
 const  instance = new Razorpay({
    key_id: razorpay.key_id,
    key_secret: razorpay.key_secret,
